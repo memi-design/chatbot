@@ -6,7 +6,7 @@ deployment path.
 
 ## What is installed
 
-- `.github/workflows/memi-design-ci.yml` runs Memi on pushes and pull requests.
+- `.github/workflows/memi-design-ci.yml` follows the reviewed Memi `v2` Action while pinning the CLI to `2.5.0`.
 - `memoire.policy.json` commits the design-quality contract.
 - `.agents/skills/enforce-design-ci/SKILL.md` gives Codex, Claude, Cursor, and
   other Agent Skills clients the same completion gate.
