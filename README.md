@@ -16,6 +16,10 @@
 </p>
 <br/>
 
+> **Design CI proof fork:** this fork keeps Vercel Chatbot intact and adds a
+> pinned, deterministic Memi UI-quality gate for coding agents. See
+> [MEMI.md](MEMI.md) for the workflow, local verification, and install path.
+
 ## Features
 
 - [Next.js](https://nextjs.org) App Router
