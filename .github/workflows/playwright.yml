@@ -6,16 +6,53 @@ on:
     branches: [main, master]
 
 jobs:
-  test:
-    timeout-minutes: 30
+  integration-readiness:
+    name: Browser E2E availability
     runs-on: ubuntu-latest
+    outputs:
+      ready: ${{ steps.credentials.outputs.ready }}
     env:
-      # These should be the same ones as used in production
       AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
       POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
       BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
       REDIS_URL: ${{ secrets.REDIS_URL }}
+      AI_GATEWAY_API_KEY: ${{ secrets.AI_GATEWAY_API_KEY }}
+    steps:
+      - name: Verify integration test credentials
+        id: credentials
+        shell: bash
+        run: |
+          missing=()
+          for name in AUTH_SECRET POSTGRES_URL BLOB_READ_WRITE_TOKEN REDIS_URL AI_GATEWAY_API_KEY; do
+            if [[ -z "${!name}" ]]; then
+              missing+=("$name")
+            fi
+          done
+          if (( ${#missing[@]} )); then
+            echo 'ready=false' >> "$GITHUB_OUTPUT"
+            printf 'E2E unavailable: missing configured secrets (%s).\n' "${missing[*]}" | tee -a "$GITHUB_STEP_SUMMARY"
+            if [[ "$GITHUB_EVENT_NAME" == 'pull_request' ]]; then
+              printf '::notice::E2E unavailable: missing configured integration secrets. Browser tests were not run.\n'
+            else
+              printf '::error::E2E unavailable: configure integration secrets before main-branch checks.\n'
+              exit 1
+            fi
+          else
+            echo 'ready=true' >> "$GITHUB_OUTPUT"
+          fi
 
+  test:
+    name: Browser E2E
+    needs: integration-readiness
+    if: needs.integration-readiness.outputs.ready == 'true'
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    env:
+      AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+      POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
+      BLOB_READ_WRITE_TOKEN: ${{ secrets.BLOB_READ_WRITE_TOKEN }}
+      REDIS_URL: ${{ secrets.REDIS_URL }}
+      AI_GATEWAY_API_KEY: ${{ secrets.AI_GATEWAY_API_KEY }}
     steps:
       - uses: actions/checkout@v4
         with:
