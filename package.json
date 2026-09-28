@@ -34,7 +34,7 @@
     "@streamdown/math": "^1.0.2",
     "@streamdown/mermaid": "^1.0.2",
     "@vercel/analytics": "^2.0.1",
-    "@vercel/blob": "^0.24.1",
+    "@vercel/blob": "^2.8.0",
     "@vercel/functions": "^3.7.5",
     "@vercel/otel": "^1.12.0",
     "ai": "7.0.15",
@@ -55,8 +55,8 @@
     "lucide-react": "^0.446.0",
     "motion": "^12.42.2",
     "nanoid": "^5.1.16",
-    "next": "16.2.10",
-    "next-auth": "5.0.0-beta.25",
+    "next": "16.3.6",
+    "next-auth": "5.0.0-beta.32",
     "next-themes": "^0.3.0",
     "orderedmap": "^2.1.1",
     "papaparse": "^5.5.4",
@@ -89,7 +89,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.5.2",
     "@playwright/test": "^1.61.1",
-    "@tailwindcss/postcss": "^4.3.2",
+    "@tailwindcss/postcss": "^4.3.3",
     "@tailwindcss/typography": "^0.5.20",
     "@types/d3-scale": "^4.0.9",
     "@types/node": "^24.13.2",
@@ -101,8 +101,8 @@
     "drizzle-kit": "^0.31.10",
     "husky": "^9.1.7",
     "lint-staged": "^16.4.0",
-    "postcss": "^8",
-    "tailwindcss": "^4.3.2",
+    "postcss": "^8.5.23",
+    "tailwindcss": "^4.3.3",
     "tsx": "^4.23.0",
     "typescript": "^5.6.3",
     "ultracite": "^7.8.4"
@@ -110,5 +110,14 @@
   "lint-staged": {
     "*": "corepack pnpm run fix --"
   },
-  "packageManager": "pnpm@10.32.1"
+  "packageManager": "pnpm@10.32.1",
+  "pnpm": {
+    "overrides": {
+      "brace-expansion": "5.0.9",
+      "kysely": "0.28.17",
+      "linkify-it": "5.0.2",
+      "lodash-es": "4.18.0",
+      "ws": "8.21.0"
+    }
+  }
 }
