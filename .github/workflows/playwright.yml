@@ -31,7 +31,12 @@ jobs:
           if (( ${#missing[@]} )); then
             echo 'ready=false' >> "$GITHUB_OUTPUT"
             printf 'E2E unavailable: missing configured secrets (%s).\n' "${missing[*]}" | tee -a "$GITHUB_STEP_SUMMARY"
-            printf '::notice::E2E unavailable: missing configured integration secrets. Browser tests were not run.\n'
+            if [[ "$GITHUB_EVENT_NAME" == 'pull_request' ]]; then
+              printf '::notice::E2E unavailable: missing configured integration secrets. Browser tests were not run.\n'
+            else
+              printf '::error::E2E unavailable: configure integration secrets before main-branch checks.\n'
+              exit 1
+            fi
           else
             echo 'ready=true' >> "$GITHUB_OUTPUT"
           fi
