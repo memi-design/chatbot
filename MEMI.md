@@ -41,8 +41,8 @@ drift away from the code.
 npx -y @memi-design/cli@2.5.0 init --team
 ```
 
-Then copy the workflow or use `sarveshsea/memi@v2.5.0` as a composite GitHub
+Then copy the workflow or use `memi-design/memi@v2.5.0` as a composite GitHub
 Action.
 
-Memi: https://github.com/sarveshsea/memi
+Memi: https://github.com/memi-design/memi
 Upstream template: https://github.com/vercel/chatbot
